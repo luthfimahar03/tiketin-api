@@ -1,12 +1,17 @@
-const route = require('express').Router()
+const express = require("express")
+const Route = express.Router()
 
-route.get('*', (req, res) => {
-    res.status(404).send({
-        code: 404,
-        status: 'Not Found',
-        message: `Can't ${req.method} the route: '${req.url}'!`,
-        error: true
-    })
-})
 
-module.exports = route
+//import routes
+// const products = require("./routes/products")
+// const categories = require("./routes/categories")
+const users = require("./users")
+// const order = require("./routes/order")
+
+Route
+    // .use("/products", products)
+    // .use("/categories", categories)
+    .use("/users", users)
+    // .use("/order", order)
+
+module.exports = Route

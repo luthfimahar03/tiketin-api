@@ -18,6 +18,7 @@ async function start() {
         server.use(logger('dev'))
         server.use(routes)
         
+        // start
         server.listen(port, () => {
             console.log(`Server running on http://localhost:${port}\n`)
         })

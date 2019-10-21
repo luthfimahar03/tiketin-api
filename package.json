@@ -1,0 +1,19 @@
+{
+  "name": "tiketin-api",
+  "version": "1.0.0",
+  "description": "Backend Service for Tiketin App",
+  "main": "server.js",
+  "repository": "https://github.com/galileo-team/tiketin-api.git",
+  "author": "Sutan Nasution. <sutan.gnst@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6-alpha.5",
+    "morgan": "^1.9.1"
+  }
+}

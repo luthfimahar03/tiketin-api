@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2019 at 10:06 AM
+-- Generation Time: Oct 22, 2019 at 10:34 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -53,6 +53,7 @@ CREATE TABLE `hotel` (
   `id` int(11) NOT NULL,
   `id_city` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
+  `price` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -61,11 +62,11 @@ CREATE TABLE `hotel` (
 -- Dumping data for table `hotel`
 --
 
-INSERT INTO `hotel` (`id`, `id_city`, `name`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Fave Hotel', '2019-10-22 15:06:34', '2019-10-22 15:06:34'),
-(2, 1, 'Hotel Santika', '2019-10-22 15:06:34', '2019-10-22 15:06:34'),
-(3, 2, 'Hotel JW Mariot', '2019-10-22 15:06:34', '2019-10-22 15:06:34'),
-(4, 2, 'Hotel Shangri La', '2019-10-22 15:06:34', '2019-10-22 15:06:34');
+INSERT INTO `hotel` (`id`, `id_city`, `name`, `price`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Fave Hotel', 500000, '2019-10-22 15:06:34', '2019-10-22 15:06:34'),
+(2, 1, 'Hotel Santika', 550000, '2019-10-22 15:06:34', '2019-10-22 15:06:34'),
+(3, 2, 'Hotel JW Mariot', 90000, '2019-10-22 15:06:34', '2019-10-22 15:06:34'),
+(4, 2, 'Hotel Shangri La', 750000, '2019-10-22 15:06:34', '2019-10-22 15:06:34');
 
 -- --------------------------------------------------------
 

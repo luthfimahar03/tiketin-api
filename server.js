@@ -20,7 +20,7 @@ async function start() {
 
 		// started
 		server.listen(port, () => {
-			console.log(`Server running on http://localhost:${port}\n`)
+			console.log(`Server running on port: ${port}\n`)
 		})
 	} catch (err) {
 		console.error('An error occured during start server:', err)

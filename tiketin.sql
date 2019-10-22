@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2019 at 02:15 PM
+-- Generation Time: Oct 22, 2019 at 09:52 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -34,6 +34,16 @@ CREATE TABLE `hotel` (
   `location` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `hotel`
+--
+
+INSERT INTO `hotel` (`id`, `name`, `location`) VALUES
+(1, 'Fave Hotel', 'Bogor'),
+(2, 'Hotel Santika', 'Bogor'),
+(3, 'Hotel JW Mariot', 'Jakarta'),
+(4, 'Hotel Shangri La', 'Jakarta');
+
 -- --------------------------------------------------------
 
 --
@@ -45,11 +55,8 @@ CREATE TABLE `hotel_booked` (
   `id_users` int(11) NOT NULL,
   `check_in_at` datetime NOT NULL,
   `check_out_at` datetime NOT NULL,
-<<<<<<< HEAD
-=======
   `hotel_name` varchar(50) NOT NULL,
   `hotel_location` varchar(50) NOT NULL,
->>>>>>> development
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -72,8 +79,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
-<<<<<<< HEAD
-=======
 -- Dumping data for table `users`
 --
 
@@ -81,7 +86,6 @@ INSERT INTO `users` (`id`, `email`, `first_name`, `last_name`, `num_phone`, `pas
 (00000000001, 'jum@gmail.com', 'Jumaidil', 'Fadillah', '085267906085', '$2a$10$dSQNtW/ZGxxyNkCSdJS8cOR3BcMi5WvEYX06ZSm2qWg6AZ3jGoxw6', '2019-10-22 14:23:22', '2019-10-22 14:23:22');
 
 --
->>>>>>> development
 -- Indexes for dumped tables
 --
 
@@ -112,7 +116,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `hotel`
 --
 ALTER TABLE `hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `hotel_booked`
@@ -124,11 +128,7 @@ ALTER TABLE `hotel_booked`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-<<<<<<< HEAD
-  MODIFY `id` int(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
-=======
   MODIFY `id` int(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
->>>>>>> development
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

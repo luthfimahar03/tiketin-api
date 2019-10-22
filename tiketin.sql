@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2019 at 09:52 AM
+-- Generation Time: Oct 22, 2019 at 10:06 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -25,24 +25,47 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `city`
+--
+
+CREATE TABLE `city` (
+  `id` int(10) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `city`
+--
+
+INSERT INTO `city` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Bogor', '2019-10-22 15:06:04', '2019-10-22 15:06:04'),
+(2, 'Jakarta', '2019-10-22 15:06:04', '2019-10-22 15:06:04');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hotel`
 --
 
 CREATE TABLE `hotel` (
   `id` int(11) NOT NULL,
+  `id_city` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `location` varchar(50) NOT NULL
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `hotel`
 --
 
-INSERT INTO `hotel` (`id`, `name`, `location`) VALUES
-(1, 'Fave Hotel', 'Bogor'),
-(2, 'Hotel Santika', 'Bogor'),
-(3, 'Hotel JW Mariot', 'Jakarta'),
-(4, 'Hotel Shangri La', 'Jakarta');
+INSERT INTO `hotel` (`id`, `id_city`, `name`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Fave Hotel', '2019-10-22 15:06:34', '2019-10-22 15:06:34'),
+(2, 1, 'Hotel Santika', '2019-10-22 15:06:34', '2019-10-22 15:06:34'),
+(3, 2, 'Hotel JW Mariot', '2019-10-22 15:06:34', '2019-10-22 15:06:34'),
+(4, 2, 'Hotel Shangri La', '2019-10-22 15:06:34', '2019-10-22 15:06:34');
 
 -- --------------------------------------------------------
 
@@ -53,10 +76,9 @@ INSERT INTO `hotel` (`id`, `name`, `location`) VALUES
 CREATE TABLE `hotel_booked` (
   `id` int(10) UNSIGNED ZEROFILL NOT NULL,
   `id_users` int(11) NOT NULL,
+  `id_hotel` int(11) NOT NULL,
   `check_in_at` datetime NOT NULL,
   `check_out_at` datetime NOT NULL,
-  `hotel_name` varchar(50) NOT NULL,
-  `hotel_location` varchar(50) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -90,6 +112,12 @@ INSERT INTO `users` (`id`, `email`, `first_name`, `last_name`, `num_phone`, `pas
 --
 
 --
+-- Indexes for table `city`
+--
+ALTER TABLE `city`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `hotel`
 --
 ALTER TABLE `hotel`
@@ -111,6 +139,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `city`
+--
+ALTER TABLE `city`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `hotel`

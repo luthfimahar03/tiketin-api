@@ -259,8 +259,8 @@
 							"type": "text"
 						},
 						{
-							"key": "payment_method",
-							"value": "GoPay",
+							"key": "price",
+							"value": "400000",
 							"type": "text"
 						},
 						{
@@ -278,6 +278,91 @@
 					"path": [
 						"hotel",
 						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hotel Booking Choose Payment",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "00000000002",
+							"type": "text"
+						},
+						{
+							"key": "payment_method",
+							"value": "GoPay",
+							"type": "text"
+						},
+						{
+							"key": "booked_status",
+							"value": "Waiting Payment",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/hotel/booking/choose-payment",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"hotel",
+						"booking",
+						"choose-payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hotel Booking Payment",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "00000000002",
+							"type": "text"
+						},
+						{
+							"key": "payment_proof",
+							"type": "file",
+							"src": "/D:/Pictures/bukti.jpg"
+						},
+						{
+							"key": "booked_status",
+							"value": "Waiting Payment Confirmation",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/hotel/booking/payment",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"hotel",
+						"booking",
+						"payment"
 					]
 				}
 			},
@@ -305,12 +390,12 @@
 						},
 						{
 							"key": "booked_status",
-							"value": "Payment Declined",
+							"value": "Payment Accept",
 							"type": "text"
 						},
 						{
 							"key": "information",
-							"value": "Struk tidak sah.",
+							"value": "",
 							"type": "text"
 						}
 					]
@@ -392,8 +477,8 @@
 							"type": "text"
 						},
 						{
-							"key": "payment_method",
-							"value": "GoPay",
+							"key": "price",
+							"value": "230000",
 							"type": "text"
 						},
 						{
@@ -404,12 +489,12 @@
 					]
 				},
 				"url": {
-					"raw": "{{base_url}}/hotel/booking",
+					"raw": "{{base_url}}/sewa-mobil/booking",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"hotel",
+						"sewa-mobil",
 						"booking"
 					]
 				}

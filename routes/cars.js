@@ -5,5 +5,6 @@ const carsController = require('../app/controllers/cars')
 
 Route
 	.get('/', carsController.getCars)
+	.post('/rentals', carsController.carBooking)
 
 module.exports = Route

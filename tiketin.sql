@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2019 at 05:24 AM
+-- Generation Time: Oct 23, 2019 at 06:09 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -62,9 +62,11 @@ CREATE TABLE `car_booked` (
   `price` int(11) NOT NULL,
   `payment_method` varchar(50) NOT NULL,
   `payment_proof` text DEFAULT NULL,
-  `rentals_code` varchar(6) NOT NULL,
+  `booking_code` varchar(6) NOT NULL,
   `information` text DEFAULT NULL,
-  `rentals_status` varchar(50) NOT NULL
+  `booking_status` varchar(50) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

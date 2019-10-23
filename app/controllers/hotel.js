@@ -90,7 +90,8 @@ module.exports = {
 	hotelBooking: (req, res) => {
 		const { id_users, id_hotel_rooms, check_in_at, check_out_at, payment_method, booked_status } = req.body
 		const number_guests = parseInt(req.body.number_guests)
-		const data = { id_users, id_hotel_rooms, check_in_at, check_out_at, number_guests, payment_method, booked_status }
+		const price = parseInt(req.body.price)
+		const data = { id_users, id_hotel_rooms, check_in_at, check_out_at, number_guests, price, payment_method, booked_status }
 		hotelModel
 			.hotelBooking(data)
 			.then(resultQuery => {

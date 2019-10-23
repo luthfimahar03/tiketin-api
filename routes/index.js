@@ -1,19 +1,13 @@
-const express = require("express")
+const express = require('express')
 const Route = express.Router()
 
-
-//import routes
-// const products = require("./routes/products")
-// const categories = require("./routes/categories")
-const users = require("./users")
-const hotel = require("./hotel")
-// const order = require("./routes/order")
+const users = require('./users')
+const hotel = require('./hotel')
+const cars = require('./cars')
 
 Route
-    // .use("/products", products)
-    // .use("/categories", categories)
-    .use("/users", users)
-    .use("/hotel", hotel)
-    // .use("/order", order)
+  .use('/users', users)
+  .use('/hotel', hotel)
+  .use('/sewa-mobil', cars)
 
 module.exports = Route

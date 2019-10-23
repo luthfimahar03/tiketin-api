@@ -147,7 +147,6 @@ module.exports = {
 	},
 
 	proofPayment: (req, res) => {
-		console.log('ajdhakdkjk')
 		const { id } = req.body
 		let randomstring = require("randomstring");
 		let data

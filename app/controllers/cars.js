@@ -10,8 +10,8 @@ module.exports = {
 
 		carsModel
 			.getCars(query)
-			.then(resultQuery => {
-				if (resultQuery.length <= 0) {
+			.then(result => {
+				if (result.length <= 0) {
 					status = 404
 					res.status(status).json({
 						status,
@@ -22,7 +22,7 @@ module.exports = {
 					res.status(status).json({
 						status,
 						message: 'Success getting all cars.',
-						data: resultQuery
+						data: result
 					})
 				}
 			})
@@ -44,7 +44,8 @@ module.exports = {
 	},
 
 	carBooking: (req, res) => {
-		const { id_users, id_car, from_date, to_date, payment_method, booked_status } = req.body
+		const { id_users, id_car, from_date, to_date } = req.body
+		const booked_status = 'Choose Payment Method'
 		const price = parseInt(req.body.price)
 
 		const date1 = new Date(from_date)
@@ -52,15 +53,116 @@ module.exports = {
 		const Difference_In_Time = date2.getTime() - date1.getTime()
 		const days = (Difference_In_Time / (1000 * 3600 * 24)) + 1
 
-		const dataQuery = { id_users, id_car, from_date, to_date, price, payment_method, booked_status }
-		const data = { id_users, id_car, from_date, to_date, days, price, payment_method, booked_status }
+		const dataQuery = { id_users, id_car, from_date, to_date, price, booked_status }
+		let data = { id_users, id_car, from_date, to_date, days, price, booked_status }
 		carsModel
 			.carBooking(dataQuery)
-			.then(resultQuery => {
+			.then(result => {
 				status = 200
+				let id = result.insertId
+				data = { id, ...data }
 				res.status(status).json({
 					status,
-					message: 'Success checkout hotel.',
+					message: 'Success booking car.',
+					data
+				})
+			})
+			.catch(err => {
+				console.log(err)
+				status = 500
+				res.status(status).json({
+					status,
+					message: err
+				})
+			})
+	},
+
+	carBookingChoosePayment: (req, res) => {
+		const { id, payment_method } = req.body
+		const booked_status = 'Waiting Payment'
+		const updated_at = new Date()
+
+		let data = { payment_method, booked_status, updated_at }
+
+		carsModel
+			.carBookingChoosePayment(data, id)
+			.then(result => {
+				status = 200
+				data = { id, ...data }
+				res.status(status).json({
+					status,
+					message: 'Success choose payment method for car rentals',
+					data
+				})
+			})
+			.catch(err => {
+				console.log(err)
+				status = 500
+				res.status(status).json({
+					status,
+					message: err
+				})
+			})
+	},
+
+	carBookingPayment: (req, res) => {
+		const { id } = req.body
+		const booked_status = 'Waiting Payment Confirmation'
+		let payment_proof = req.files.payment_proof
+
+		let randomstring = require("randomstring")
+		let paymentProofCode = randomstring.generate({
+			length: 6,
+			charset: 'alphanumeric'
+		})
+		let image = `${paymentProofCode}_${payment_proof.name}`
+
+		payment_proof.mv('uploads/' + image, function (err) {
+			if (err) res.send(err);
+			console.log("success")
+
+		})
+
+		payment_proof = image
+		const updated_at = new Date()
+		let data = { payment_proof, booked_status, updated_at }
+
+		carsModel
+			.carBookingPayment(data, id)
+			.then(result => {
+				status = 200
+				data = { id, ...data }
+				res.status(status).json({
+					status,
+					message: 'Success upload payment proof for car rentals.',
+					data
+				})
+			})
+			.catch(err => {
+				console.log(err)
+				status = 500
+				res.status(status).json({
+					status,
+					message: err
+				})
+			})
+	},
+
+	carBookingPaymentConfirm: (req, res) => {
+		const { id, booked_status, } = req.body
+		const booked_status = 'Waiting Payment'
+		const updated_at = new Date()
+
+		let data = { payment_method, booked_status, updated_at }
+
+		carsModel
+			.carBookingPaymentConfirm(data, id)
+			.then(result => {
+				status = 200
+				data = { id, ...data }
+				res.status(status).json({
+					status,
+					message: 'Success choose payment method for car rentals',
 					data
 				})
 			})

@@ -25,5 +25,38 @@ module.exports = {
 				}
 			})
 		})
+	},
+	carBookingChoosePayment: (data, id) => {
+		return new Promise((resolve, reject) => {
+			conn.query('UPDATE car_booked SET ? WHERE id=?', [data, id], (err, result) => {
+				if (!err) {
+					resolve(result)
+				} else {
+					reject(err)
+				}
+			})
+		})
+	},
+	carBookingPayment: (data, id) => {
+		return new Promise((resolve, reject) => {
+			conn.query('UPDATE car_booked SET ? WHERE id=?', [data, id], (err, result) => {
+				if (!err) {
+					resolve(result)
+				} else {
+					reject(err)
+				}
+			})
+		})
+	},
+	carBookingPaymentConfirm: (data, id) => {
+		return new Promise((resolve, reject) => {
+			conn.query('UPDATE car_booked SET ? WHERE id=?', [data, id], (err, result) => {
+				if (!err) {
+					resolve(result)
+				} else {
+					reject(err)
+				}
+			})
+		})
 	}
 }

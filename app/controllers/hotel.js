@@ -88,9 +88,10 @@ module.exports = {
 	},
 
 	hotelBooking: (req, res) => {
-		const { id_users, id_hotel_rooms, check_in_at, check_out_at, payment_method, booked_status } = req.body
+		const { id_users, id_hotel_rooms, check_in_at, check_out_at, payment_method } = req.body
 		const number_guests = parseInt(req.body.number_guests)
 		const price = parseInt(req.body.price)
+		const booked_status = 'Choose Payment Method'
 		let data = { id_users, id_hotel_rooms, check_in_at, check_out_at, number_guests, price, payment_method, booked_status }
 		hotelModel
 			.hotelBooking(data)
@@ -100,7 +101,7 @@ module.exports = {
 				data = { id, ...data }
 				res.status(status).json({
 					status,
-					message: 'Success checkout hotel.',
+					message: 'Success booking hotel.',
 					data
 				})
 			})
@@ -115,7 +116,8 @@ module.exports = {
 	},
 
 	hotelBookingChoosePayment: (req, res) => {
-		let { id, payment_method, booked_status } = req.body
+		let { id, payment_method } = req.body
+		const booked_status = 'Waiting Payment'
 		const updated_at = new Date()
 		let data = { payment_method, booked_status, updated_at }
 
@@ -141,7 +143,8 @@ module.exports = {
 	},
 
 	proofPayment: (req, res) => {
-		const { id, booked_status } = req.body
+		const { id } = req.body
+		const booked_status = 'Waiting Payment Confirmation'
 		let randomstring = require("randomstring");
 		let payment_proof = req.files.payment_proof;
 
@@ -168,7 +171,7 @@ module.exports = {
 				data = { id, ...data }
 				res.status(status).json({
 					status,
-					message: 'Success upload proof of payment.',
+					message: 'Success upload payment proof for hotel booked.',
 					data
 				})
 			})
@@ -203,7 +206,7 @@ module.exports = {
 				data = { id, ...data }
 				res.status(status).json({
 					status,
-					message: 'Success update booked hotel confirm.',
+					message: 'Success update booked hotel confirmation.',
 					data
 				})
 			})

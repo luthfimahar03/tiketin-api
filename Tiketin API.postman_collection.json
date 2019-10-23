@@ -262,11 +262,6 @@
 							"key": "price",
 							"value": "400000",
 							"type": "text"
-						},
-						{
-							"key": "booked_status",
-							"value": "Choose Payment Method",
-							"type": "text"
 						}
 					]
 				},
@@ -300,17 +295,12 @@
 					"urlencoded": [
 						{
 							"key": "id",
-							"value": "00000000002",
+							"value": "00000000001",
 							"type": "text"
 						},
 						{
 							"key": "payment_method",
 							"value": "GoPay",
-							"type": "text"
-						},
-						{
-							"key": "booked_status",
-							"value": "Waiting Payment",
 							"type": "text"
 						}
 					]
@@ -339,18 +329,13 @@
 					"formdata": [
 						{
 							"key": "id",
-							"value": "00000000002",
+							"value": "00000000001",
 							"type": "text"
 						},
 						{
 							"key": "payment_proof",
 							"type": "file",
 							"src": "/D:/Pictures/bukti.jpg"
-						},
-						{
-							"key": "booked_status",
-							"value": "Waiting Payment Confirmation",
-							"type": "text"
 						}
 					]
 				},
@@ -369,7 +354,7 @@
 			"response": []
 		},
 		{
-			"name": "Hotel Booking Confirm",
+			"name": "Hotel Booking Payment Confirm",
 			"request": {
 				"method": "PATCH",
 				"header": [
@@ -385,7 +370,7 @@
 					"urlencoded": [
 						{
 							"key": "id",
-							"value": "00000000002",
+							"value": "00000000001",
 							"type": "text"
 						},
 						{
@@ -420,7 +405,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/sewa-mobil?id_city=2&name",
+					"raw": "{{base_url}}/sewa-mobil?id_city=1&name=",
 					"host": [
 						"{{base_url}}"
 					],
@@ -430,11 +415,11 @@
 					"query": [
 						{
 							"key": "id_city",
-							"value": "2"
+							"value": "1"
 						},
 						{
 							"key": "name",
-							"value": null
+							"value": ""
 						}
 					]
 				}
@@ -463,7 +448,7 @@
 						},
 						{
 							"key": "id_car",
-							"value": "1",
+							"value": "00000000001",
 							"type": "text"
 						},
 						{
@@ -480,11 +465,6 @@
 							"key": "price",
 							"value": "230000",
 							"type": "text"
-						},
-						{
-							"key": "booked_status",
-							"value": "Choose Payment Method",
-							"type": "text"
 						}
 					]
 				},
@@ -496,6 +476,128 @@
 					"path": [
 						"sewa-mobil",
 						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Car Booking Choose Payment",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "payment_method",
+							"value": "OVO",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/sewa-mobil/booking/choose-payment",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sewa-mobil",
+						"booking",
+						"choose-payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Car Booking Payment",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "payment_proof",
+							"type": "file",
+							"src": "/D:/Pictures/bukti.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/sewa-mobil/booking/payment",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sewa-mobil",
+						"booking",
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Car Booking Payment Confirm",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "booked_status",
+							"value": "Payment Accept",
+							"type": "text"
+						},
+						{
+							"key": "information",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/sewa-mobil/booking/payment/confirm",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sewa-mobil",
+						"booking",
+						"payment",
+						"confirm"
 					]
 				}
 			},

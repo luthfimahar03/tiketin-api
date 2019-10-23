@@ -81,10 +81,9 @@ module.exports = {
 			})
 			.catch(err => {
 				status = 401
-				console.log(err)
 				res.status(status).json({
 					status,
-					message: 'Invalid email.'
+					message: err
 				})
 			})
 	}

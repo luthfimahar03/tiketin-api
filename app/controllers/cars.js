@@ -149,11 +149,18 @@ module.exports = {
 	},
 
 	carBookingPaymentConfirm: (req, res) => {
-		const { id, booked_status, } = req.body
-		const booked_status = 'Waiting Payment'
+		const { id, booked_status, information } = req.body
 		const updated_at = new Date()
+		if (booked_status === 'Payment Accept') {
+			const randomstring = require("randomstring")
+			var booking_code = randomstring.generate({
+				length: 6,
+				charset: 'alphabetic',
+				capitalization: 'uppercase'
+			})
+		}
 
-		let data = { payment_method, booked_status, updated_at }
+		let data = { booking_code, booked_status, information, updated_at }
 
 		carsModel
 			.carBookingPaymentConfirm(data, id)
@@ -162,7 +169,7 @@ module.exports = {
 				data = { id, ...data }
 				res.status(status).json({
 					status,
-					message: 'Success choose payment method for car rentals',
+					message: 'Success update car rentals payment confirmation.',
 					data
 				})
 			})

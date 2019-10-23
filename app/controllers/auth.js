@@ -27,15 +27,15 @@ module.exports = {
 					})
 				})
 				.catch(err => {
-					res.json({
-						status: 500,
+					res.status(400).json({
+						status: 400,
 						message: err
 					})
 				})
 		} else {
-			res.json({
-				status: 500,
-				message: err
+			res.status(400).json({
+				status: 400,
+				message: 'Data is required!'
 			})
 		}
 	},

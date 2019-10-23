@@ -5,7 +5,7 @@ module.exports = {
 
 	getCars: (req, res) => {
 		let { id_city, name } = req.query
-		let query = `SELECT * FROM cars WHERE id_city=${id_city}`
+		let query = `SELECT * FROM car WHERE id_city=${id_city}`
 		name && (query += ` AND name='${name}'`)
 
 		carsModel

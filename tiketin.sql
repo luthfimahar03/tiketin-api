@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2019 at 06:29 PM
+-- Generation Time: Oct 23, 2019 at 05:24 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -25,10 +25,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cars`
+-- Table structure for table `car`
 --
 
-CREATE TABLE `cars` (
+CREATE TABLE `car` (
   `id` int(10) UNSIGNED ZEROFILL NOT NULL,
   `id_city` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -38,10 +38,10 @@ CREATE TABLE `cars` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `cars`
+-- Dumping data for table `car`
 --
 
-INSERT INTO `cars` (`id`, `id_city`, `name`, `price`, `passengers`, `baggage`) VALUES
+INSERT INTO `car` (`id`, `id_city`, `name`, `price`, `passengers`, `baggage`) VALUES
 (0000000001, 1, 'Toyota Avanza', 230000, 6, 2),
 (0000000002, 1, 'Toyota Agya', 200000, 5, 2),
 (0000000003, 2, 'Daihatsu Xenia', 220000, 6, 2),
@@ -50,13 +50,13 @@ INSERT INTO `cars` (`id`, `id_city`, `name`, `price`, `passengers`, `baggage`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `car_rentals`
+-- Table structure for table `car_booked`
 --
 
-CREATE TABLE `car_rentals` (
+CREATE TABLE `car_booked` (
   `id` int(10) UNSIGNED ZEROFILL NOT NULL,
-  `id_car` int(11) NOT NULL,
   `id_users` int(11) NOT NULL,
+  `id_car` int(11) NOT NULL,
   `from_date` date NOT NULL,
   `to_date` date NOT NULL,
   `price` int(11) NOT NULL,
@@ -140,7 +140,7 @@ CREATE TABLE `hotel_booked` (
 --
 
 INSERT INTO `hotel_booked` (`id`, `id_users`, `id_hotel_rooms`, `check_in_at`, `check_out_at`, `number_guests`, `price`, `payment_method`, `payment_proof`, `booking_code`, `booked_status`, `information`, `created_at`, `updated_at`) VALUES
-(0000000002, 00000000001, 1, '2019-10-23', '2019-10-24', 2, 0, 'GoPay', NULL, '', 'Payment Declined', 'Struk tidak sah.', '2019-10-22 22:06:30', '2019-10-22 22:22:33');
+(0000000001, 00000000001, 1, '2019-10-23', '2019-10-24', 2, 0, 'GoPay', NULL, '', 'Payment Declined', 'Struk tidak sah.', '2019-10-22 22:06:30', '2019-10-22 22:22:33');
 
 -- --------------------------------------------------------
 
@@ -164,10 +164,10 @@ CREATE TABLE `hotel_rooms` (
 --
 
 INSERT INTO `hotel_rooms` (`id`, `id_hotel`, `name`, `price`, `from_date`, `to_date`, `stock`, `maximum_guests`) VALUES
-(1, 1, 'Deluxe', 500000, '2019-10-23', '2019-10-24', 5, 4),
-(2, 1, 'Melati', 200000, '2019-10-23', '2019-10-24', 4, 2),
-(3, 3, 'Economy', 400000, '2019-10-23', '2019-10-24', 6, 2),
-(4, 3, 'VIP', 900000, '2019-10-23', '2019-10-24', 3, 4);
+(1, 1, 'Deluxe', 500000, '2019-10-27', '2019-10-28', 5, 4),
+(2, 1, 'Melati', 200000, '2019-10-27', '2019-10-28', 4, 2),
+(3, 3, 'Economy', 400000, '2019-10-27', '2019-10-28', 6, 2),
+(4, 3, 'VIP', 900000, '2019-10-27', '2019-10-28', 3, 4);
 
 -- --------------------------------------------------------
 
@@ -217,16 +217,16 @@ INSERT INTO `users` (`id`, `email`, `first_name`, `last_name`, `num_phone`, `pas
 --
 
 --
--- Indexes for table `cars`
+-- Indexes for table `car`
 --
-ALTER TABLE `cars`
+ALTER TABLE `car`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_city` (`id_city`);
 
 --
--- Indexes for table `car_rentals`
+-- Indexes for table `car_booked`
 --
-ALTER TABLE `car_rentals`
+ALTER TABLE `car_booked`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -275,15 +275,15 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `cars`
+-- AUTO_INCREMENT for table `car`
 --
-ALTER TABLE `cars`
+ALTER TABLE `car`
   MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `car_rentals`
+-- AUTO_INCREMENT for table `car_booked`
 --
-ALTER TABLE `car_rentals`
+ALTER TABLE `car_booked`
   MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
 
 --
@@ -302,7 +302,7 @@ ALTER TABLE `hotel`
 -- AUTO_INCREMENT for table `hotel_booked`
 --
 ALTER TABLE `hotel_booked`
-  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `hotel_rooms`
@@ -327,10 +327,10 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `cars`
+-- Constraints for table `car`
 --
-ALTER TABLE `cars`
-  ADD CONSTRAINT `cars_ibfk_1` FOREIGN KEY (`id_city`) REFERENCES `city` (`id`);
+ALTER TABLE `car`
+  ADD CONSTRAINT `car_ibfk_1` FOREIGN KEY (`id_city`) REFERENCES `city` (`id`);
 
 --
 -- Constraints for table `hotel`

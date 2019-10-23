@@ -1,6 +1,5 @@
 // import model
 const usersModel = require('../models/user')
-const conn = require('../../config/db')
 const bcrypt = require('bcryptjs')
 let jwt = require('jsonwebtoken')
 // let middleware = require('../../auth/middleware');
@@ -63,11 +62,13 @@ module.exports = {
 						status,
 						message: 'login success',
 						data: {
-							email,
-							first_name,
-							last_name,
-							num_phone,
-							token
+							token,
+							user: {
+								email,
+								first_name,
+								last_name,
+								num_phone
+							}
 						}
 					})
 				} else {

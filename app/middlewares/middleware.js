@@ -1,12 +1,12 @@
 let jwt = require('jsonwebtoken');
-const configs = require('./configs.js');
+const configs = require('../../config/configs');
 
 // to get a token from a request and proceeds only when the token is validated.
 let checkToken = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
 
   if (token) {
-    jwt.verify(token.split(" ")[1], configs.secret, (err, decoded) => {
+    jwt.verify(token.split(" ")[1], configs.jwtPrivateKey, (err, decoded) => {
       if (err) {
         return res.json({
           success: false,

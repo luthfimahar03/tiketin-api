@@ -47,5 +47,18 @@ module.exports = {
 				}
 			})
 		})
+	},
+
+	proofPayment: (data, id) => {
+		return new Promise((resolve, reject) => {
+			conn.query('UPDATE hotel_booked SET ? WHERE ?', [data, id], (err, result) => {
+				if (!err) {
+					resolve(result)
+				} else {
+					reject(err)
+				}
+			})
+		})
 	}
+
 }

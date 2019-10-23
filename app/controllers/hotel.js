@@ -1,4 +1,5 @@
 const hotelModel = require('../models/hotel')
+const uuidv4 = require('uuid/v4');
 let status = 200
 
 module.exports = {
@@ -132,6 +133,48 @@ module.exports = {
 				res.status(status).json({
 					status,
 					message: 'Success update booked hotel confirm.',
+					data
+				})
+			})
+			.catch(err => {
+				console.log(err)
+				status = 500
+				res.status(status).json({
+					status,
+					message: err
+				})
+			})
+	},
+
+	proofPayment: (req, res) => {
+		console.log('ajdhakdkjk')
+		const { id } = req.body
+		let randomstring = require("randomstring");
+		let data
+		let payment_proof = req.files.payment_proof;
+		let image = uuidv4() + `.${req.files.payment_proof.mimetype.split("/")[1]}`
+
+		payment_proof.mv('uploads/' + image, function (err) {
+			if (err) res.send(err);
+			console.log("success")
+
+		})
+		var payment_proof_code = randomstring.generate({
+			length: 12,
+			charset: 'alphabetic',
+			capitalization: 'uppercase'
+		});
+
+		payment_proof =  payment_proof_code + payment_proof.name
+		data = { id, payment_proof }
+
+		hotelModel
+			.proofPayment(data, id)
+			.then(resultQuery => {
+				status = 200
+				res.status(status).json({
+					status,
+					message: 'Success upload proof of payment.',
 					data
 				})
 			})

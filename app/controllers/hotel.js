@@ -142,7 +142,7 @@ module.exports = {
 			})
 	},
 
-	proofPayment: (req, res) => {
+	proofPaymentHotel: (req, res) => {
 		const { id } = req.body
 		const booked_status = 'Waiting Payment Confirmation'
 		let randomstring = require("randomstring");
@@ -165,7 +165,7 @@ module.exports = {
 		let data = { payment_proof, booked_status, updated_at }
 
 		hotelModel
-			.proofPayment(data, id)
+			.proofPaymentHotel(data, id)
 			.then(result => {
 				status = 200
 				data = { id, ...data }
@@ -208,6 +208,27 @@ module.exports = {
 					status,
 					message: 'Success update booked hotel confirmation.',
 					data
+				})
+			})
+			.catch(err => {
+				console.log(err)
+				status = 500
+				res.status(status).json({
+					status,
+					message: err
+				})
+			})
+	},
+	getHistory: (req, res) => {
+
+		hotelModel
+			.getHistory()
+			.then(result => {
+				status = 200
+				res.status(status).json({
+					status,
+					message: 'Success get all history hotel.',
+					result
 				})
 			})
 			.catch(err => {

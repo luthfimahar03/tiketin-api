@@ -4,7 +4,7 @@ module.exports = {
 	registration: data => {
 		return new Promise((resolve, reject) => {
 			conn.query(
-				'SELECT * FROM users WHERE email=? ',
+				'SELECT * FROM users WHERE email=?',
 				[data.email],
 				(err, result) => {
 					if (result.length < 1) {
@@ -30,6 +30,24 @@ module.exports = {
 					resolve(result)
 				} else {
 					reject(new Error(err))
+				}
+			})
+		})
+	},
+	resetPassword: (password, email) => {
+		return new Promise((resolve, reject) => {
+			conn.query(`SELECT email FROM users WHERE email=?`, email, (err, result) => {
+				if (!err && result.length >= 1) {
+					conn.query(`UPDATE users SET password=? WHERE email=?`, [password, email], (err, result) => {
+						if (!err) {
+							resolve(result)
+						} else {
+							reject(new Error(err))
+						}
+					})
+				} else {
+					err = 'Your email is not registered in Tiketin.'
+					reject(err)
 				}
 			})
 		})

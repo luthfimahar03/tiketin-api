@@ -16,7 +16,7 @@ module.exports = {
 							}
 						})
 					} else {
-						err = 'Email is already registered'
+						err = 'Email is already registered.'
 						reject(err)
 					}
 				}

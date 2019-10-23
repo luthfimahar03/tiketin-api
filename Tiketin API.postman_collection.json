@@ -1,0 +1,608 @@
+{
+	"info": {
+		"_postman_id": "cbc3ed97-2f35-4b09-b6d2-ec2a9fee0760",
+		"name": "Tiketin API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5c37495-f228-44d8-92cd-23c45084c05a",
+						"exec": [
+							"var dataJSON = pm.response.json();",
+							"var token = dataJSON.data.token;",
+							"if(token && token!=='') {",
+							"    pm.environment.set(\"token\", token);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "jum@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "jum",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/users/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5c37495-f228-44d8-92cd-23c45084c05a",
+						"exec": [
+							"var dataJSON = pm.response.json();",
+							"var token = dataJSON.data.token;",
+							"if(token && token!=='') {",
+							"    pm.environment.set(\"token\", token);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "jum@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "jum",
+							"type": "text"
+						},
+						{
+							"key": "first_name",
+							"value": "Jumaidil",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Fadillah",
+							"type": "text"
+						},
+						{
+							"key": "num_phone",
+							"value": "085267906085",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/users/registration",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hotels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/hotel/?id=1&name=",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"hotel",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "name",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hotel Rooms",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{base_url}}/hotel/rooms?idHotel=1&fromDate=2019-10-27&toDate=2019-10-28&minPrice=200000&maxPrice=500000&numberGuests=3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"hotel",
+						"rooms"
+					],
+					"query": [
+						{
+							"key": "idHotel",
+							"value": "1"
+						},
+						{
+							"key": "fromDate",
+							"value": "2019-10-27"
+						},
+						{
+							"key": "toDate",
+							"value": "2019-10-28"
+						},
+						{
+							"key": "minPrice",
+							"value": "200000"
+						},
+						{
+							"key": "maxPrice",
+							"value": "500000"
+						},
+						{
+							"key": "numberGuests",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hotel Booking",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id_users",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "id_hotel_rooms",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "check_in_at",
+							"value": "2019-10-23",
+							"type": "text"
+						},
+						{
+							"key": "check_out_at",
+							"value": "2019-10-24",
+							"type": "text"
+						},
+						{
+							"key": "number_guests",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "400000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/hotel/booking",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"hotel",
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hotel Booking Choose Payment",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "payment_method",
+							"value": "GoPay",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/hotel/booking/choose-payment",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"hotel",
+						"booking",
+						"choose-payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hotel Booking Payment",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "payment_proof",
+							"type": "file",
+							"src": "/D:/Pictures/bukti.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/hotel/booking/payment",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"hotel",
+						"booking",
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hotel Booking Payment Confirm",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "booked_status",
+							"value": "Payment Accept",
+							"type": "text"
+						},
+						{
+							"key": "information",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/hotel/booking/confirm",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"hotel",
+						"booking",
+						"confirm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/sewa-mobil?id_city=1&name=",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sewa-mobil"
+					],
+					"query": [
+						{
+							"key": "id_city",
+							"value": "1"
+						},
+						{
+							"key": "name",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Car Booking",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id_users",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "id_car",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "from_date",
+							"value": "2019-10-24",
+							"type": "text"
+						},
+						{
+							"key": "to_date",
+							"value": "2019-10-24",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "230000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/sewa-mobil/booking",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sewa-mobil",
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Car Booking Choose Payment",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "payment_method",
+							"value": "OVO",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/sewa-mobil/booking/choose-payment",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sewa-mobil",
+						"booking",
+						"choose-payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Car Booking Payment",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "payment_proof",
+							"type": "file",
+							"src": "/D:/Pictures/bukti.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/sewa-mobil/booking/payment",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sewa-mobil",
+						"booking",
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Car Booking Payment Confirm",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "booked_status",
+							"value": "Payment Accept",
+							"type": "text"
+						},
+						{
+							"key": "information",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/sewa-mobil/booking/payment/confirm",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sewa-mobil",
+						"booking",
+						"payment",
+						"confirm"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

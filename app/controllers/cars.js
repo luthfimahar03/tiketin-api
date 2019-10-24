@@ -1,4 +1,5 @@
 const carsModel = require('../models/cars')
+const url = require('../../config/url')
 let status = 200
 
 module.exports = {
@@ -11,7 +12,7 @@ module.exports = {
 		carsModel
 			.getCars(query)
 			.then(result => {
-				if (result.length <= 0) {
+				if (result.length < 1) {
 					status = 404
 					res.status(status).json({
 						status,
@@ -19,6 +20,9 @@ module.exports = {
 					})
 				} else {
 					status = 200
+					for (let i = 0; i < result.length; i++) {
+						result[i].image && result[i].image !== undefined && result[i].image !== null && (result[i].image_url = url.carsImgSrc + result[i].image)
+					}
 					res.status(status).json({
 						status,
 						message: 'Success getting all cars.',

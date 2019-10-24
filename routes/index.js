@@ -9,7 +9,7 @@ const promo = require('./promo')
 Route
   .use('/users', users)
   .use('/hotel', hotel)
-  .use('/sewa-mobil', cars)
+  .use('/car-rentals', cars)
   .use('/promo', promo)
 
 module.exports = Route

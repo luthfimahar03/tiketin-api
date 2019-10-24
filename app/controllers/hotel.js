@@ -1,17 +1,19 @@
 const hotelModel = require('../models/hotel')
+const url = require('../../config/url')
 let status = 200
 
 module.exports = {
+
 	getHotel: (req, res) => {
-		let id_city = req.query.id
+		let { id_city } = req.query
 		let { name } = req.query
 		let query = `SELECT * FROM hotel WHERE id_city=${id_city}`
 		name && (query += ` AND name='${name}'`)
 
 		hotelModel
 			.getHotel(query)
-			.then(resultQuery => {
-				if (resultQuery.length <= 0) {
+			.then(result => {
+				if (result.length <= 0) {
 					status = 404
 					res.status(status).json({
 						status,
@@ -19,10 +21,13 @@ module.exports = {
 					})
 				} else {
 					status = 200
+					for (let i = 0; i < result.length; i++) {
+						result[i].image && result[i].image !== undefined && result[i].image !== null && (result[i].image_url = url.hotelImgSrc + result[i].image)
+					}
 					res.status(status).json({
 						status,
 						message: 'Success getting all hotel',
-						data: resultQuery
+						data: result
 					})
 				}
 			})
@@ -61,13 +66,16 @@ module.exports = {
 
 		hotelModel
 			.getHotelRooms(query)
-			.then(resultQuery => {
-				if (resultQuery.length >= 1) {
+			.then(result => {
+				if (result.length >= 1) {
 					status = 200
+					for (let i = 0; i < result.length; i++) {
+						result[i].image && result[i].image !== undefined && result[i].image !== null && (result[i].image_url = url.hotelRoomImgSrc + result[i].image)
+					}
 					res.status(status).json({
 						status,
 						message: 'Success getting all hotel rooms.',
-						data: resultQuery
+						data: result
 					})
 				} else {
 					status = 404
@@ -218,5 +226,82 @@ module.exports = {
 					message: err
 				})
 			})
+	},
+
+	getOrder: (req, res) => {
+		let { id_users } = req.query
+
+		hotelModel
+			.getOrder(id_users)
+			.then(resultQuery => {
+				if (resultQuery.length <= 0) {
+					status = 404
+					res.status(status).json({
+						status,
+						message: 'Hotel order not found.'
+					})
+				} else {
+					status = 200
+					res.status(status).json({
+						status,
+						message: 'Success getting all hotel order.',
+						data: resultQuery
+					})
+				}
+			})
+			.catch(err => {
+				if (!id_users) {
+					status = 404
+					res.status(status).json({
+						status,
+						message: 'User not found.'
+					})
+				} else {
+					console.log(err)
+					res.json({
+						status: 500,
+						message: err
+					})
+				}
+			})
+	},
+
+	getOrderHistory: (req, res) => {
+		let { id_users } = req.query
+
+		hotelModel
+			.getOrderHistory(id_users)
+			.then(resultQuery => {
+				if (resultQuery.length <= 0) {
+					status = 404
+					res.status(status).json({
+						status,
+						message: 'Hotel order history not found.'
+					})
+				} else {
+					status = 200
+					res.status(status).json({
+						status,
+						message: 'Success getting all hotel order history.',
+						data: resultQuery
+					})
+				}
+			})
+			.catch(err => {
+				if (!id_users) {
+					status = 404
+					res.status(status).json({
+						status,
+						message: 'User not found.'
+					})
+				} else {
+					console.log(err)
+					res.json({
+						status: 500,
+						message: err
+					})
+				}
+			})
 	}
+
 }

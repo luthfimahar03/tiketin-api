@@ -11,6 +11,7 @@ const port = process.env.SERVER_PORT || 9600
 
 async function start() {
 	try {
+		server.use(express.static('./'))
 		server.use(express.urlencoded({ extended: true }))
 		server.use(express.json())
 		server.use(cors())

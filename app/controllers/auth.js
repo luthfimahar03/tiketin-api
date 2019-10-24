@@ -47,12 +47,12 @@ module.exports = {
 			.login(email)
 			.then(result => {
 				const password = req.body.password
-				const idUser = result[0].id
+				const id_user = result[0].id
 				const passwordHash = result[0].password
 				const jwtPrivateKey = config.jwtPrivateKey
 
 				if (bcrypt.compareSync(password, passwordHash)) {
-					const token = jwt.sign({ idUser: idUser }, jwtPrivateKey, {
+					const token = jwt.sign({ id_user: id_user }, jwtPrivateKey, {
 						expiresIn: '24h'
 					})
 
@@ -63,6 +63,7 @@ module.exports = {
 						status,
 						message: 'login success',
 						data: {
+							id_user,
 							email,
 							first_name,
 							last_name,

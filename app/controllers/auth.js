@@ -27,15 +27,15 @@ module.exports = {
 					})
 				})
 				.catch(err => {
-					res.json({
-						status: 500,
+					res.status(400).json({
+						status: 400,
 						message: err
 					})
 				})
 		} else {
-			res.json({
-				status: 500,
-				message: err
+			res.status(400).json({
+				status: 400,
+				message: 'Data is required!'
 			})
 		}
 	},
@@ -63,12 +63,14 @@ module.exports = {
 						status,
 						message: 'login success',
 						data: {
-							id_user,
-							email,
-							first_name,
-							last_name,
-							num_phone,
-							token
+							token,
+							user: {
+                id_user,
+								email,
+								first_name,
+								last_name,
+								num_phone
+							}
 						}
 					})
 				} else {
@@ -81,10 +83,9 @@ module.exports = {
 			})
 			.catch(err => {
 				status = 401
-				console.log(err)
 				res.status(status).json({
 					status,
-					message: 'Invalid email.'
+					message: err
 				})
 			})
 	},

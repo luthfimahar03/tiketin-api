@@ -1,3 +1,37 @@
+
+-- phpMyAdmin SQL Dump
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Oct 23, 2019 at 10:27 AM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.9
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `tiketin`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `car`
+--
+
+CREATE TABLE `car` (
+  `id` int(10) UNSIGNED ZEROFILL NOT NULL,
+
 -- --------------------------------------------------------
 -- Host:                         tiketin.c7zy3dpl9od5.us-east-1.rds.amazonaws.com
 -- Server version:               5.7.22 - Source distribution
@@ -18,6 +52,28 @@ CREATE TABLE IF NOT EXISTS `car` (
   `name` varchar(50) NOT NULL,
   `price` int(11) NOT NULL,
   `passengers` int(2) NOT NULL,
+
+  `baggage` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `car`
+--
+
+INSERT INTO `car` (`id`, `id_city`, `name`, `price`, `passengers`, `baggage`) VALUES
+(0000000001, 1, 'Toyota Avanza', 230000, 6, 2),
+(0000000002, 1, 'Toyota Agya', 200000, 5, 2),
+(0000000003, 2, 'Daihatsu Xenia', 220000, 6, 2),
+(0000000004, 2, 'Daihatsu Ayla', 210000, 5, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `car_booked`
+--
+
+CREATE TABLE `car_booked` (
+  `id` int(10) UNSIGNED ZEROFILL NOT NULL,
   `baggage` int(2) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -107,6 +163,10 @@ CREATE TABLE IF NOT EXISTS `hotel_booked` (
   `check_out_at` date NOT NULL,
   `number_guests` int(2) NOT NULL,
   `price` int(11) NOT NULL,
+
+  `payment_method` varchar(100) NOT NULL,
+  `payment_proof` varchar(50) NOT NULL,
+
   `payment_method` varchar(100) DEFAULT NULL,
   `payment_proof` text,
   `booking_code` varchar(6) DEFAULT NULL,
@@ -135,6 +195,47 @@ CREATE TABLE IF NOT EXISTS `hotel_rooms` (
   `from_date` date NOT NULL,
   `to_date` date NOT NULL,
   `stock` int(11) NOT NULL,
+
+  `maximum_guests` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hotel_rooms`
+--
+
+INSERT INTO `hotel_rooms` (`id`, `id_hotel`, `name`, `price`, `from_date`, `to_date`, `stock`, `maximum_guests`) VALUES
+(1, 1, 'Deluxe', 500000, '2019-10-27', '2019-10-28', 5, 4),
+(2, 1, 'Melati', 200000, '2019-10-27', '2019-10-28', 4, 2),
+(3, 3, 'Economy', 400000, '2019-10-27', '2019-10-28', 6, 2),
+(4, 3, 'VIP', 900000, '2019-10-27', '2019-10-28', 3, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_method`
+--
+
+CREATE TABLE `payment_method` (
+  `id` int(10) UNSIGNED ZEROFILL NOT NULL,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `payment_method`
+--
+
+INSERT INTO `payment_method` (`id`, `name`) VALUES
+(0000000001, 'Transfer Bank - BCA'),
+(0000000002, 'GoPay');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) UNSIGNED ZEROFILL NOT NULL,
   `maximum_guests` int(2) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -191,8 +292,146 @@ INSERT INTO `users` (`id`, `email`, `first_name`, `last_name`, `num_phone`, `pas
 	(00000000001, 'jumaidilfadillah@gmail.com', 'Jumaidil', 'Fadillah', '085267906085', '$2a$10$qSdBAhv2krDCRPxZJ.buFuax4zfq0/dy236EG.qt4VvywNeOFbnNG', NULL, '2019-10-22 14:23:22', '2019-10-22 14:23:22'),
 	(00000000002, 'sutan.gnst@gmail.com ', 'Gading', 'Nasution', '6281271377018', '$2a$10$Fk8rzc9SrXj5LZKcJqzh5uyEXyI3RACPXl2/Jmp.v1yOkZf6dumGe', NULL, '2019-10-23 15:50:55', '2019-10-23 15:50:55'),
 	(00000000003, 'suta.gnst@gmail.com ', 'Gading', 'Nasution', '6281271377018', '$2a$10$6eqKLuNSDQXyEj07n82Uj.TaeN6VG7Pbt97uxh8l/h1xoQqbuMSFe', NULL, '2019-10-23 15:58:52', '2019-10-23 15:58:52');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+--
+-- Indexes for dumped tables
+--
 
+--
+-- Indexes for table `car`
+--
+ALTER TABLE `car`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_city` (`id_city`);
+
+--
+-- Indexes for table `car_booked`
+--
+ALTER TABLE `car_booked`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `city`
+--
+ALTER TABLE `city`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `hotel`
+--
+ALTER TABLE `hotel`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_city` (`id_city`);
+
+--
+-- Indexes for table `hotel_booked`
+--
+ALTER TABLE `hotel_booked`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_hotel_rooms` (`id_hotel_rooms`),
+  ADD KEY `id_users` (`id_users`);
+
+--
+-- Indexes for table `hotel_rooms`
+--
+ALTER TABLE `hotel_rooms`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_hotel` (`id_hotel`);
+
+--
+-- Indexes for table `payment_method`
+--
+ALTER TABLE `payment_method`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `car`
+--
+ALTER TABLE `car`
+  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `car_booked`
+--
+ALTER TABLE `car_booked`
+  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `city`
+--
+ALTER TABLE `city`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `hotel`
+--
+ALTER TABLE `hotel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `hotel_booked`
+--
+ALTER TABLE `hotel_booked`
+  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `hotel_rooms`
+--
+ALTER TABLE `hotel_rooms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `payment_method`
+--
+ALTER TABLE `payment_method`
+  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `car`
+--
+ALTER TABLE `car`
+  ADD CONSTRAINT `car_ibfk_1` FOREIGN KEY (`id_city`) REFERENCES `city` (`id`);
+
+--
+-- Constraints for table `hotel`
+--
+ALTER TABLE `hotel`
+  ADD CONSTRAINT `hotel_ibfk_1` FOREIGN KEY (`id_city`) REFERENCES `city` (`id`);
+
+--
+-- Constraints for table `hotel_booked`
+--
+ALTER TABLE `hotel_booked`
+  ADD CONSTRAINT `hotel_booked_ibfk_1` FOREIGN KEY (`id_hotel_rooms`) REFERENCES `hotel_rooms` (`id`),
+  ADD CONSTRAINT `hotel_booked_ibfk_2` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `hotel_rooms`
+--
+ALTER TABLE `hotel_rooms`
+  ADD CONSTRAINT `hotel_rooms_ibfk_1` FOREIGN KEY (`id_hotel`) REFERENCES `hotel` (`id`);
+COMMIT;
+ 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

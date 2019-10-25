@@ -27,7 +27,10 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			conn.query('SELECT * FROM users WHERE email=?', email, (err, result) => {
 				if (!err) {
-					resolve(result)
+					if (result.length > 0) {
+						return resolve(result)
+					}
+					reject('Email not registered')
 				} else {
 					reject(new Error(err))
 				}

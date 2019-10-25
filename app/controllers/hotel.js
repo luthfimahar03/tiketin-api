@@ -1,5 +1,6 @@
 const hotelModel = require('../models/hotel')
 const url = require('../../config/url')
+const uuidv4 = require('uuid/v4');
 let status = 200
 
 module.exports = {
@@ -150,7 +151,7 @@ module.exports = {
 			})
 	},
 
-	proofPayment: (req, res) => {
+	proofPaymentHotel: (req, res) => {
 		const { id } = req.body
 		const booked_status = 'Waiting Payment Confirmation'
 		let randomstring = require("randomstring");
@@ -173,7 +174,7 @@ module.exports = {
 		let data = { payment_proof, booked_status, updated_at }
 
 		hotelModel
-			.proofPayment(data, id)
+			.proofPaymentHotel(data, id)
 			.then(result => {
 				status = 200
 				data = { id, ...data }
@@ -227,7 +228,7 @@ module.exports = {
 				})
 			})
 	},
-
+  
 	getOrder: (req, res) => {
 		let { id_users } = req.query
 
@@ -301,6 +302,61 @@ module.exports = {
 						message: err
 					})
 				}
+      
+	proofPayment: (req, res) => {
+		const { id } = req.body
+		let randomstring = require("randomstring");
+		let data
+		let payment_proof = req.files.payment_proof;
+		let image = uuidv4() + `.${req.files.payment_proof.mimetype.split("/")[1]}`
+
+		payment_proof.mv('uploads/' + image, function (err) {
+			if (err) res.send(err);
+			console.log("success")
+
+		})
+		var payment_proof_code = randomstring.generate({
+			length: 12,
+			charset: 'alphabetic',
+			capitalization: 'uppercase'
+		});
+
+		payment_proof = payment_proof_code + payment_proof.name
+		data = { id, payment_proof }
+
+		hotelModel
+			.proofPayment(data, id)
+			.then(resultQuery => {
+				status = 200
+				res.status(status).json({
+					status,
+					message: 'Success upload proof of payment.',
+					data
+				})
+			})
+	},
+	
+	getHistory: (req, res) => {
+
+		hotelModel
+			.getHistory()
+			.then(result => {
+				status = 200
+				res.status(status).json({
+					status,
+					message: 'Success get all history hotel.',
+					result
+
+				})
+			})
+			.catch(err => {
+				console.log(err)
+				status = 500
+				res.status(status).json({
+					status,
+					message: err
+				})
+      
 			})
 	}
 

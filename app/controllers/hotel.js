@@ -302,7 +302,9 @@ module.exports = {
 						message: err
 					})
 				}
-      
+			})
+	},
+
 	proofPayment: (req, res) => {
 		const { id } = req.body
 		let randomstring = require("randomstring");

@@ -13,5 +13,7 @@ Route
 	.patch('/booking/payment/confirm', usersController.validateUser, hotelController.hotelBookingConfirm)
 	.get('/order', usersController.validateUser, hotelController.getOrder)
 	.get('/order/history', usersController.validateUser, hotelController.getOrderHistory)
+	.post('/add', usersController.validateUser, hotelController.addHotel)
+	.post('/room/add', usersController.validateUser, hotelController.addHotelRoom)
 
 module.exports = Route

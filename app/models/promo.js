@@ -36,6 +36,7 @@ module.exports = {
       })
     })
   },
+  /*
   editCategory: (data, id) => {
     return new Promise((resolve, reject) => {
       conn.query('UPDATE category SET ? WHERE id=?', [data, id], (err, result) => {
@@ -58,4 +59,5 @@ module.exports = {
       })
     })
   }
+  */
 }

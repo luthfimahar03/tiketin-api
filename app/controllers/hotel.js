@@ -1,14 +1,15 @@
 const hotelModel = require('../models/hotel')
 const url = require('../../config/url')
-const uuidv4 = require('uuid/v4');
 let status = 200
 
 module.exports = {
 
 	getHotel: (req, res) => {
-		let { id_city } = req.query
+		let { id_city, from_date, to_date } = req.query
 		let { name } = req.query
-		let query = `SELECT * FROM hotel WHERE id_city=${id_city}`
+		let query = `SELECT h.*, MIN(hr.price) AS price
+									FROM hotel h, hotel_rooms hr
+									WHERE h.id=hr.id_hotel AND h.id_city=${id_city} AND hr.from_date='${from_date}' AND hr.to_date='${to_date}'`
 		name && (query += ` AND name='${name}'`)
 
 		hotelModel
@@ -60,10 +61,10 @@ module.exports = {
 			name
 		} = req.query
 
-		!minPrice && (minPrice = 0)
-		!maxPrice && (maxPrice = 0)
-		let query = `SELECT * FROM hotel_rooms WHERE id_hotel=${idHotel} AND from_date='${fromDate}' AND to_date='${toDate}' AND price>=${minPrice} AND price<=${maxPrice} AND maximum_guests>=${numberGuests}`
+		let query = `SELECT * FROM hotel_rooms WHERE id_hotel=${idHotel} AND from_date='${fromDate}' AND to_date='${toDate}' AND maximum_guests>=${numberGuests}`
 		name && (query += ` AND name='${name}'`)
+		minPrice && (query += ` AND price>='${minPrice}'`)
+		maxPrice && (query += ` AND price<='${maxPrice}'`)
 
 		hotelModel
 			.getHotelRooms(query)
@@ -151,7 +152,7 @@ module.exports = {
 			})
 	},
 
-	proofPaymentHotel: (req, res) => {
+	proofPayment: (req, res) => {
 		const { id } = req.body
 		const booked_status = 'Waiting Payment Confirmation'
 		let randomstring = require("randomstring");
@@ -174,7 +175,7 @@ module.exports = {
 		let data = { payment_proof, booked_status, updated_at }
 
 		hotelModel
-			.proofPaymentHotel(data, id)
+			.proofPayment(data, id)
 			.then(result => {
 				status = 200
 				data = { id, ...data }
@@ -228,7 +229,7 @@ module.exports = {
 				})
 			})
 	},
-  
+
 	getOrder: (req, res) => {
 		let { id_users } = req.query
 
@@ -305,60 +306,87 @@ module.exports = {
 			})
 	},
 
-	proofPayment: (req, res) => {
-		const { id } = req.body
-		let randomstring = require("randomstring");
-		let data
-		let payment_proof = req.files.payment_proof;
-		let image = uuidv4() + `.${req.files.payment_proof.mimetype.split("/")[1]}`
+	addHotel: (req, res) => {
+		const { id_city, name, address, star } = req.body
+		const imageFile = req.files.image
 
-		payment_proof.mv('uploads/' + image, function (err) {
-			if (err) res.send(err);
-			console.log("success")
-
+		let randomstring = require("randomstring")
+		let randomCode = randomstring.generate({
+			length: 6,
+			charset: 'alphanumeric'
 		})
-		var payment_proof_code = randomstring.generate({
-			length: 12,
-			charset: 'alphabetic',
-			capitalization: 'uppercase'
-		});
+		const image = `${randomCode}_${imageFile.name}`
 
-		payment_proof = payment_proof_code + payment_proof.name
-		data = { id, payment_proof }
+		imageFile.mv(url.hotelImgPath + image, function (err) {
+			if (err) res.send(err)
+			else console.log("success")
+		})
+
+		let data = { id_city, name, image, address, star }
 
 		hotelModel
-			.proofPayment(data, id)
-			.then(resultQuery => {
+			.addHotel(data)
+			.then(result => {
 				status = 200
+				const id = result.insertId
+				data = { id, ...data }
+
 				res.status(status).json({
 					status,
-					message: 'Success upload proof of payment.',
+					message: 'Success add hotel.',
 					data
 				})
 			})
-	},
-	
-	getHistory: (req, res) => {
-
-		hotelModel
-			.getHistory()
-			.then(result => {
-				status = 200
-				res.status(status).json({
-					status,
-					message: 'Success get all history hotel.',
-					result
-
-				})
-			})
-			.catch(err => {
-				console.log(err)
+			.catch(error => {
+				console.log(error)
 				status = 500
 				res.status(status).json({
 					status,
-					message: err
+					message: 'Error add hotel to database.',
+					error
 				})
-      
+			})
+	},
+
+	addHotelRoom: (req, res) => {
+		const { id_hotel, name, price, from_date, to_date, stock, maximum_guests } = req.body
+		const imageFile = req.files.image
+
+		let randomstring = require("randomstring")
+		let randomCode = randomstring.generate({
+			length: 6,
+			charset: 'alphanumeric'
+		})
+		const image = `${randomCode}_${imageFile.name}`
+
+		imageFile.mv(url.hotelImgPath + image, function (err) {
+			if (err) res.send(err)
+			else console.log("success")
+		})
+
+		let data = { id_hotel, name, image, price, from_date, to_date, stock, maximum_guests }
+
+		hotelModel
+			.addHotelRoom(data)
+			.then(result => {
+				status = 200
+				const id = result.insertId
+				data = { id, ...data }
+
+				res.status(status).json({
+					status,
+					message: 'Success add hotel.',
+					data
+				})
+			})
+			.catch(error => {
+				console.log(error)
+				status = 500
+				res.status(status).json({
+					status,
+					message: 'Error add hotel to database.',
+					error
+				})
 			})
 	}
 

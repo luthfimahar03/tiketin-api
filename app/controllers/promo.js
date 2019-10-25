@@ -1,5 +1,8 @@
+const { Notification } = require('onesignal-node')
 const promoModel = require('../models/promo')
 const url = require('../../config/url')
+const oneSignal = require('../../config/onesignal')
+
 let status = 200
 
 module.exports = {
@@ -95,6 +98,21 @@ module.exports = {
         status = 200
         const id = result.insertId
         data = { id, ...data }
+        
+        oneSignal.sendNotification(new Notification({
+          headings: {
+            en: `Promo Baru! ${title}`
+          },
+          contents: {
+            en: content
+          },
+          included_segments: ['Active Users', 'Inactive Users']
+        })).then(response => {
+          console.log('Notification sent!')
+        }).catch(err => {
+          console.log(err)
+        })
+        
         res.status(status).json({
           status,
           message: 'Success add promo.',

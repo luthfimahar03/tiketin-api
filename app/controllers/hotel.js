@@ -361,7 +361,7 @@ module.exports = {
 		})
 		const image = `${randomCode}_${imageFile.name}`
 
-		imageFile.mv(url.hotelImgPath + image, function (err) {
+		imageFile.mv(url.hotelRoomImgPath + image, function (err) {
 			if (err) res.send(err)
 			else console.log("success")
 		})

@@ -1,10 +1,12 @@
 require('dotenv').config()
 const base_url = `${process.env.SERVER_URL}:${process.env.SERVER_PORT}`
 const rootPath = 'uploads/'
+
 const promoImgPath = `${rootPath}promo/`
 const hotelImgPath = `${rootPath}hotels/`
 const hotelRoomImgPath = `${hotelImgPath}rooms/`
 const carsImgPath = `${rootPath}cars/`
+const paymentProofFlightPath = `${rootPath}payment-proof/flights/`
 
 module.exports = {
 	promoImgPath,
@@ -14,5 +16,7 @@ module.exports = {
 	hotelRoomImgPath,
 	hotelRoomImgSrc: `${base_url}/${hotelRoomImgPath}`,
 	carsImgPath,
-	carsImgSrc: `${base_url}/${carsImgPath}`
+	carsImgSrc: `${base_url}/${carsImgPath}`,
+	paymentProofFlightPath,
+	paymentProofFlightSrc: `${base_url}/${paymentProofFlightPath}`
 }

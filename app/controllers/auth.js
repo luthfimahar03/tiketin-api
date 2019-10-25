@@ -109,7 +109,7 @@ module.exports = {
 		let email = req.body.email
 		const randomstring = require('randomstring')
 		let password = randomstring.generate({
-			length: 12,
+			length: 8,
 			charset: 'alphanumeric'
 		})
 		let salt = bcrypt.genSaltSync(saltRounds)

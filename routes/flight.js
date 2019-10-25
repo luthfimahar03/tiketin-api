@@ -11,9 +11,8 @@ Route
 	.patch('/booking/choose-payment', usersController.validateUser, flightController.flightBookingChoosePayment)
 	.patch('/booking/payment', usersController.validateUser, flightController.flightBookingPayment)
 	.patch('/booking/payment/confirm', usersController.validateUser, flightController.flightBookingConfirm)
-/*
-.get('/order', usersController.validateUser, hotelController.getOrder)
-.get('/order/history', usersController.validateUser, hotelController.getOrderHistory)
-*/
+	.get('/order', usersController.validateUser, flightController.getOrder)
+	.get('/order/history', usersController.validateUser, flightController.getOrderHistory)
+	.get('/passenger', usersController.validateUser, flightController.getPassenger)
 
 module.exports = Route

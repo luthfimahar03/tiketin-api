@@ -13,10 +13,12 @@
 					"script": {
 						"id": "e5c37495-f228-44d8-92cd-23c45084c05a",
 						"exec": [
-							"var dataJSON = pm.response.json();",
-							"var token = dataJSON.data.token;",
+							"const dataJSON = pm.response.json()",
+							"const token = dataJSON.data.token",
 							"if(token && token!=='') {",
-							"    pm.environment.set(\"token\", token);",
+							"    pm.environment.set('id_user', dataJSON.data.id_user)",
+							"    pm.environment.set('email', dataJSON.data.email)",
+							"    pm.environment.set('token', token)",
 							"}"
 						],
 						"type": "text/javascript"
@@ -180,12 +182,29 @@
 			"response": []
 		},
 		{
+			"name": "City",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/city",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"city"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Hotels",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/hotel/?id=1&name=",
+					"raw": "{{base_url}}/hotel/?id_city=1&name",
 					"host": [
 						"{{base_url}}"
 					],
@@ -195,12 +214,12 @@
 					],
 					"query": [
 						{
-							"key": "id",
+							"key": "id_city",
 							"value": "1"
 						},
 						{
 							"key": "name",
-							"value": ""
+							"value": null
 						}
 					]
 				}
@@ -487,17 +506,86 @@
 			"response": []
 		},
 		{
+			"name": "Hotels Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/hotel/order?id_users=00000000001",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"hotel",
+						"order"
+					],
+					"query": [
+						{
+							"key": "id_users",
+							"value": "00000000001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hotels Order History",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/hotel/order/history?id_users=00000000001",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"hotel",
+						"order",
+						"history"
+					],
+					"query": [
+						{
+							"key": "id_users",
+							"value": "00000000001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Cars",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/sewa-mobil?id_city=1&name=",
+					"raw": "{{base_url}}/car-rentals?id_city=1&name=",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"sewa-mobil"
+						"car-rentals"
 					],
 					"query": [
 						{
@@ -566,12 +654,12 @@
 					]
 				},
 				"url": {
-					"raw": "{{base_url}}/sewa-mobil/booking",
+					"raw": "{{base_url}}/car-rentals/booking",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"sewa-mobil",
+						"car-rentals",
 						"booking"
 					]
 				}
@@ -616,12 +704,12 @@
 					]
 				},
 				"url": {
-					"raw": "{{base_url}}/sewa-mobil/booking/choose-payment",
+					"raw": "{{base_url}}/car-rentals/booking/choose-payment",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"sewa-mobil",
+						"car-rentals",
 						"booking",
 						"choose-payment"
 					]
@@ -660,12 +748,12 @@
 					]
 				},
 				"url": {
-					"raw": "{{base_url}}/sewa-mobil/booking/payment",
+					"raw": "{{base_url}}/car-rentals/booking/payment",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"sewa-mobil",
+						"car-rentals",
 						"booking",
 						"payment"
 					]
@@ -716,15 +804,517 @@
 					]
 				},
 				"url": {
-					"raw": "{{base_url}}/sewa-mobil/booking/payment/confirm",
+					"raw": "{{base_url}}/car-rentals/booking/payment/confirm",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"sewa-mobil",
+						"car-rentals",
 						"booking",
 						"payment",
 						"confirm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Promo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/promo",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"promo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Promo Detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/promo/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"promo",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Promo Add",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Cashback Pesan Hotel",
+							"type": "text"
+						},
+						{
+							"key": "feature_image",
+							"type": "file",
+							"src": "/D:/Pictures/strike-freedom-wallpaper.jpg"
+						},
+						{
+							"key": "content",
+							"value": "Ini adalah isi dari detail promo.",
+							"type": "text"
+						},
+						{
+							"key": "valid_from",
+							"value": "2019-10-23 10:00:00",
+							"type": "text"
+						},
+						{
+							"key": "valid_until",
+							"value": "2019-11-22 21:00:00",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/promo/add",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"promo",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Flight",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/flight?from_id_city=2&to_id_city=3&date=2019-10-27",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"flight"
+					],
+					"query": [
+						{
+							"key": "from_id_city",
+							"value": "2"
+						},
+						{
+							"key": "to_id_city",
+							"value": "3"
+						},
+						{
+							"key": "date",
+							"value": "2019-10-27"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Flight Booking",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id_users",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "id_flight_schedule",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "contact_name",
+							"value": "Jumaidil Fadillah",
+							"type": "text"
+						},
+						{
+							"key": "contact_num_phone",
+							"value": "085267906085",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "1100000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/flight/booking",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"flight",
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Flight Booking Passenger",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id_flight_schedule",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "full_name",
+							"value": "Jumaidil Fadillah",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/flight/booking/passenger",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"flight",
+						"booking",
+						"passenger"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Flight Booking Choose Payment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "payment_method",
+							"value": "Transfer BCA",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/flight/booking/choose-payment",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"flight",
+						"booking",
+						"choose-payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Flight Booking Payment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "payment_proof",
+							"type": "file",
+							"src": "/D:/Pictures/bukti.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/flight/booking/payment",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"flight",
+						"booking",
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Flight Booking Payment Confirm",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "00000000001",
+							"type": "text"
+						},
+						{
+							"key": "booked_status",
+							"value": "Payment Accept",
+							"type": "text"
+						},
+						{
+							"key": "information",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/flight/booking/payment/confirm",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"flight",
+						"booking",
+						"payment",
+						"confirm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Flight Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/flight/order?id_users=00000000001",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"flight",
+						"order"
+					],
+					"query": [
+						{
+							"key": "id_users",
+							"value": "00000000001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Flight Order History",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/flight/order/history?id_users=00000000001",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"flight",
+						"order",
+						"history"
+					],
+					"query": [
+						{
+							"key": "id_users",
+							"value": "00000000001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Flight Passenger",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/flight/passenger?id_flight_schedule=00000000001",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"flight",
+						"passenger"
+					],
+					"query": [
+						{
+							"key": "id_flight_schedule",
+							"value": "00000000001"
+						}
 					]
 				}
 			},

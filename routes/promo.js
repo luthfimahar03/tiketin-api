@@ -7,7 +7,7 @@ const usersController = require('../app/controllers/auth')
 Route
 	.get('/', promoController.getPromoList)
 	.get('/:id', promoController.getPromoDetail)
-	.post('/add', usersController.validateUser, promoController.addPromo)
+	.post('/add',  promoController.addPromo)
 /*
 .patch('/edit', promoController.editPromo)
 .delete('/delete', promoController.deletePromo)

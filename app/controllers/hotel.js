@@ -10,6 +10,7 @@ module.exports = {
 		let query = `SELECT h.*, hr.price
 									FROM hotel h, hotel_rooms hr
 									WHERE h.id=hr.id_hotel AND h.id_city=${id_city} AND hr.from_date='${from_date}' AND hr.to_date='${to_date}'
+									GROUP BY hr.id_hotel
 									ORDER BY hr.price ASC`
 		name && (query += ` AND name='${name}'`)
 

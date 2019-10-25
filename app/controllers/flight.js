@@ -22,12 +22,9 @@ module.exports = {
 					})
 				} else {
 					status = 200
-					for (let i = 0; i < result.length; i++) {
-						result[i].image && result[i].image !== undefined && result[i].image !== null && (result[i].image_url = url.hotelImgSrc + result[i].image)
-					}
 					res.status(status).json({
 						status,
-						message: 'Success getting all hotel',
+						message: 'Success getting all flight.',
 						data: result
 					})
 				}
@@ -77,8 +74,8 @@ module.exports = {
 	},
 
 	flightBookingPassenger: (req, res) => {
-		const { id_flight_passenger, full_name } = req.body
-		let data = { id_flight_passenger, full_name }
+		const { id_flight_schedule, full_name } = req.body
+		let data = { id_flight_schedule, full_name }
 		flightModel
 			.flightBookingPassenger(data)
 			.then(result => {
@@ -204,25 +201,24 @@ module.exports = {
 			})
 	},
 
-	/*
 	getOrder: (req, res) => {
 		let { id_users } = req.query
 
-		hotelModel
+		flightModel
 			.getOrder(id_users)
-			.then(resultQuery => {
-				if (resultQuery.length <= 0) {
+			.then(result => {
+				if (result.length <= 0) {
 					status = 404
 					res.status(status).json({
 						status,
-						message: 'Hotel order not found.'
+						message: 'Flight order not found.'
 					})
 				} else {
 					status = 200
 					res.status(status).json({
 						status,
-						message: 'Success getting all hotel order.',
-						data: resultQuery
+						message: 'Success getting all flight order.',
+						data: result
 					})
 				}
 			})
@@ -244,23 +240,23 @@ module.exports = {
 	},
 
 	getOrderHistory: (req, res) => {
-		let { id_users } = req.query
+		const { id_users } = req.query
 
-		hotelModel
+		flightModel
 			.getOrderHistory(id_users)
-			.then(resultQuery => {
-				if (resultQuery.length <= 0) {
+			.then(result => {
+				if (result.length <= 0) {
 					status = 404
 					res.status(status).json({
 						status,
-						message: 'Hotel order history not found.'
+						message: 'Flight order history not found.'
 					})
 				} else {
 					status = 200
 					res.status(status).json({
 						status,
-						message: 'Success getting all hotel order history.',
-						data: resultQuery
+						message: 'Success getting all flight order history.',
+						data: result
 					})
 				}
 			})
@@ -279,7 +275,46 @@ module.exports = {
 					})
 				}
 			})
-	}
-	*/
+	},
+
+	getPassenger: (req, res) => {
+		const { id_flight_schedule } = req.query
+
+		flightModel
+			.getPassenger(id_flight_schedule)
+			.then(result => {
+				if (result.length <= 0) {
+					status = 404
+					res.status(status).json({
+						status,
+						message: 'Flight order history not found.'
+					})
+				} else {
+					status = 200
+					res.status(status).json({
+						status,
+						message: 'Success getting all flight order history.',
+						data: result
+					})
+				}
+			})
+			.catch(err => {
+				if (!id_flight_schedule) {
+					status = 404
+					res.status(status).json({
+						status,
+						message: 'Flight schedule not found.'
+					})
+				} else {
+					console.log(err)
+					res.json({
+						status: 500,
+						message: err
+					})
+				}
+			})
+	},
+
+
 
 }

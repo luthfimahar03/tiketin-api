@@ -6,6 +6,7 @@ const promoImgPath = `${rootPath}promo/`
 const hotelImgPath = `${rootPath}hotels/`
 const hotelRoomImgPath = `${hotelImgPath}rooms/`
 const carsImgPath = `${rootPath}cars/`
+const airlinesImgPath = `${rootPath}airlines/`
 const paymentProofFlightPath = `${rootPath}payment-proof/flights/`
 
 module.exports = {
@@ -17,6 +18,8 @@ module.exports = {
 	hotelRoomImgSrc: `${base_url}/${hotelRoomImgPath}`,
 	carsImgPath,
 	carsImgSrc: `${base_url}/${carsImgPath}`,
+	airlinesImgPath,
+	airlinesImgSrc: `${base_url}/${airlinesImgPath}`,
 	paymentProofFlightPath,
 	paymentProofFlightSrc: `${base_url}/${paymentProofFlightPath}`
 }

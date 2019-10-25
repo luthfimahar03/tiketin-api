@@ -38,12 +38,12 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "jum@gmail.com",
+							"value": "jumaidilfadillah@gmail.com",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "jum",
+							"value": "WoL5xkT01FU5",
 							"type": "text"
 						}
 					]
@@ -56,6 +56,53 @@
 					"path": [
 						"users",
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Forget Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5c37495-f228-44d8-92cd-23c45084c05a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "jumaidilfadillah@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/users/reset-password",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"reset-password"
 					]
 				}
 			},
@@ -94,7 +141,7 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "jum@gmail.com",
+							"value": "jumaidilfadillah@gmail.com",
 							"type": "text"
 						},
 						{
@@ -221,6 +268,16 @@
 		{
 			"name": "Hotel Booking",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -281,6 +338,16 @@
 		{
 			"name": "Hotel Booking Choose Payment",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PATCH",
 				"header": [
 					{
@@ -322,6 +389,16 @@
 		{
 			"name": "Hotel Booking Payment",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PATCH",
 				"header": [],
 				"body": {
@@ -356,6 +433,16 @@
 		{
 			"name": "Hotel Booking Payment Confirm",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PATCH",
 				"header": [
 					{
@@ -429,6 +516,16 @@
 		{
 			"name": "Car Booking",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -484,6 +581,16 @@
 		{
 			"name": "Car Booking Choose Payment",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PATCH",
 				"header": [
 					{
@@ -525,6 +632,16 @@
 		{
 			"name": "Car Booking Payment",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PATCH",
 				"header": [],
 				"body": {
@@ -559,6 +676,16 @@
 		{
 			"name": "Car Booking Payment Confirm",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PATCH",
 				"header": [
 					{

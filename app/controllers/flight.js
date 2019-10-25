@@ -1,24 +1,24 @@
-const hotelModel = require('../models/hotel')
+const flightModel = require('../models/flight')
 const url = require('../../config/url')
-const uuidv4 = require('uuid/v4');
 let status = 200
 
 module.exports = {
 
-	getHotel: (req, res) => {
-		let { id_city } = req.query
-		let { name } = req.query
-		let query = `SELECT * FROM hotel WHERE id_city=${id_city}`
-		name && (query += ` AND name='${name}'`)
+	getFlight: (req, res) => {
+		let { from_id_city, to_id_city, date } = req.query
+		let query = `SELECT fs.*, cf.name AS from_city, ct.name AS to_city
+		FROM flight_schedule fs, city cf, city ct
+		WHERE fs.from_id_city=cf.id AND fs.to_id_city=ct.id AND
+			fs.from_id_city=${from_id_city} AND fs.to_id_city=${to_id_city} AND DATE(fs.from_at)='${date}'`
 
-		hotelModel
-			.getHotel(query)
+		flightModel
+			.getFlight(query)
 			.then(result => {
 				if (result.length <= 0) {
 					status = 404
 					res.status(status).json({
 						status,
-						message: 'Hotel not found.'
+						message: 'Flight not found.'
 					})
 				} else {
 					status = 200
@@ -49,68 +49,20 @@ module.exports = {
 			})
 	},
 
-	getHotelRooms: (req, res) => {
-		let {
-			idHotel,
-			fromDate,
-			toDate,
-			minPrice,
-			maxPrice,
-			numberGuests,
-			name
-		} = req.query
-
-		!minPrice && (minPrice = 0)
-		!maxPrice && (maxPrice = 0)
-		let query = `SELECT * FROM hotel_rooms WHERE id_hotel=${idHotel} AND from_date='${fromDate}' AND to_date='${toDate}' AND price>=${minPrice} AND price<=${maxPrice} AND maximum_guests>=${numberGuests}`
-		name && (query += ` AND name='${name}'`)
-
-		hotelModel
-			.getHotelRooms(query)
-			.then(result => {
-				if (result.length >= 1) {
-					status = 200
-					for (let i = 0; i < result.length; i++) {
-						result[i].image && result[i].image !== undefined && result[i].image !== null && (result[i].image_url = url.hotelRoomImgSrc + result[i].image)
-					}
-					res.status(status).json({
-						status,
-						message: 'Success getting all hotel rooms.',
-						data: result
-					})
-				} else {
-					status = 404
-					res.status(status).json({
-						status,
-						message: 'Nothing hotel rooms.'
-					})
-				}
-			})
-			.catch(err => {
-				console.log(err)
-				status = 500
-				res.status(status).json({
-					status,
-					message: err
-				})
-			})
-	},
-
-	hotelBooking: (req, res) => {
-		const { id_users, id_hotel_rooms, check_in_at, check_out_at, payment_method } = req.body
-		const number_guests = parseInt(req.body.number_guests)
+	flightBooking: (req, res) => {
+		const { id_users, id_flight_schedule, contact_name, contact_num_phone } = req.body
 		const price = parseInt(req.body.price)
 		const booked_status = 'Choose Payment Method'
-		let data = { id_users, id_hotel_rooms, check_in_at, check_out_at, number_guests, price, payment_method, booked_status }
-		hotelModel
-			.hotelBooking(data)
+		let data = { id_users, id_flight_schedule, contact_name, contact_num_phone, price, booked_status }
+		flightModel
+			.flightBooking(data)
 			.then(result => {
 				status = 200
 				id = result.insertId
 				data = { id, ...data }
 				res.status(status).json({
 					status,
-					message: 'Success booking hotel.',
+					message: 'Success booking flight.',
 					data
 				})
 			})
@@ -124,20 +76,45 @@ module.exports = {
 			})
 	},
 
-	hotelBookingChoosePayment: (req, res) => {
+	flightBookingPassenger: (req, res) => {
+		const { id_flight_passenger, full_name } = req.body
+		let data = { id_flight_passenger, full_name }
+		flightModel
+			.flightBookingPassenger(data)
+			.then(result => {
+				status = 200
+				id = result.insertId
+				data = { id, ...data }
+				res.status(status).json({
+					status,
+					message: 'Success add flight passenger.',
+					data
+				})
+			})
+			.catch(err => {
+				console.log(err)
+				status = 500
+				res.status(status).json({
+					status,
+					message: err
+				})
+			})
+	},
+
+	flightBookingChoosePayment: (req, res) => {
 		let { id, payment_method } = req.body
 		const booked_status = 'Waiting Payment'
 		const updated_at = new Date()
 		let data = { payment_method, booked_status, updated_at }
 
-		hotelModel
-			.hotelBookingChoosePayment(data, id)
+		flightModel
+			.flightBookingChoosePayment(data, id)
 			.then(result => {
 				status = 200
 				data = { id, ...data }
 				res.status(status).json({
 					status,
-					message: 'Success update booked hotel choose payment.',
+					message: 'Success update booked flight choose payment.',
 					data
 				})
 			})
@@ -151,36 +128,34 @@ module.exports = {
 			})
 	},
 
-	proofPaymentHotel: (req, res) => {
+	flightBookingPayment: (req, res) => {
 		const { id } = req.body
 		const booked_status = 'Waiting Payment Confirmation'
-		let randomstring = require("randomstring");
-		let payment_proof = req.files.payment_proof;
+		const paymentProof = req.files.payment_proof
 
-		var payment_proof_code = randomstring.generate({
+		const randomstring = require("randomstring")
+		const paymentProofCode = randomstring.generate({
 			length: 6,
-			charset: 'alphabetic'
-		});
-		let image = `${payment_proof_code}_${payment_proof.name}`
+			charset: 'alphanumeric'
+		})
+		const payment_proof = `${paymentProofCode}_${paymentProof.name}`
 
-		payment_proof.mv('uploads/' + image, function (err) {
-			if (err) res.send(err);
-			console.log("success")
-
+		paymentProof.mv(url.paymentProofFlightPath + payment_proof, function (err) {
+			if (err) res.send(err)
 		})
 
-		payment_proof = image
 		const updated_at = new Date()
 		let data = { payment_proof, booked_status, updated_at }
 
-		hotelModel
-			.proofPaymentHotel(data, id)
+		flightModel
+			.flightBookingPayment(data, id)
 			.then(result => {
 				status = 200
+				data.payment_proof_url = url.paymentProofFlightSrc + data.payment_proof
 				data = { id, ...data }
 				res.status(status).json({
 					status,
-					message: 'Success upload payment proof for hotel booked.',
+					message: 'Success upload payment proof for flight booking.',
 					data
 				})
 			})
@@ -194,7 +169,7 @@ module.exports = {
 			})
 	},
 
-	hotelBookingConfirm: (req, res) => {
+	flightBookingConfirm: (req, res) => {
 		const { id, booked_status, information } = req.body
 		const updated_at = new Date()
 		if (booked_status === 'Payment Accept') {
@@ -208,14 +183,14 @@ module.exports = {
 
 		let data = { booking_code, booked_status, information, updated_at }
 
-		hotelModel
-			.hotelBookingConfirm(data, id)
+		flightModel
+			.flightBookingConfirm(data, id)
 			.then(result => {
 				status = 200
 				data = { id, ...data }
 				res.status(status).json({
 					status,
-					message: 'Success update booked hotel confirmation.',
+					message: 'Success update booked flight confirmation.',
 					data
 				})
 			})
@@ -228,7 +203,8 @@ module.exports = {
 				})
 			})
 	},
-  
+
+	/*
 	getOrder: (req, res) => {
 		let { id_users } = req.query
 
@@ -302,62 +278,8 @@ module.exports = {
 						message: err
 					})
 				}
-      
-	proofPayment: (req, res) => {
-		const { id } = req.body
-		let randomstring = require("randomstring");
-		let data
-		let payment_proof = req.files.payment_proof;
-		let image = uuidv4() + `.${req.files.payment_proof.mimetype.split("/")[1]}`
-
-		payment_proof.mv('uploads/' + image, function (err) {
-			if (err) res.send(err);
-			console.log("success")
-
-		})
-		var payment_proof_code = randomstring.generate({
-			length: 12,
-			charset: 'alphabetic',
-			capitalization: 'uppercase'
-		});
-
-		payment_proof = payment_proof_code + payment_proof.name
-		data = { id, payment_proof }
-
-		hotelModel
-			.proofPayment(data, id)
-			.then(resultQuery => {
-				status = 200
-				res.status(status).json({
-					status,
-					message: 'Success upload proof of payment.',
-					data
-				})
-			})
-	},
-	
-	getHistory: (req, res) => {
-
-		hotelModel
-			.getHistory()
-			.then(result => {
-				status = 200
-				res.status(status).json({
-					status,
-					message: 'Success get all history hotel.',
-					result
-
-				})
-			})
-			.catch(err => {
-				console.log(err)
-				status = 500
-				res.status(status).json({
-					status,
-					message: err
-				})
-      
 			})
 	}
+	*/
 
 }

@@ -45,7 +45,7 @@
 						},
 						{
 							"key": "password",
-							"value": "WoL5xkT01FU5",
+							"value": "83Obi8qx",
 							"type": "text"
 						}
 					]
@@ -64,7 +64,7 @@
 			"response": []
 		},
 		{
-			"name": "User Forget Password",
+			"name": "User Forgot Password",
 			"event": [
 				{
 					"listen": "test",
@@ -204,18 +204,25 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/hotel/?id_city=1&name",
+					"raw": "{{base_url}}/hotel?id_city=00000000002&from_date=2019-10-27&to_date=2019-10-28&name",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"hotel",
-						""
+						"hotel"
 					],
 					"query": [
 						{
 							"key": "id_city",
-							"value": "1"
+							"value": "00000000002"
+						},
+						{
+							"key": "from_date",
+							"value": "2019-10-27"
+						},
+						{
+							"key": "to_date",
+							"value": "2019-10-28"
 						},
 						{
 							"key": "name",
@@ -246,7 +253,7 @@
 					"urlencoded": []
 				},
 				"url": {
-					"raw": "{{base_url}}/hotel/rooms?idHotel=1&fromDate=2019-10-27&toDate=2019-10-28&minPrice=200000&maxPrice=500000&numberGuests=3",
+					"raw": "{{base_url}}/hotel/rooms?idHotel=00000000006&fromDate=2019-10-27&toDate=2019-10-28&numberGuests=2&minPrice=&maxPrice=",
 					"host": [
 						"{{base_url}}"
 					],
@@ -257,7 +264,7 @@
 					"query": [
 						{
 							"key": "idHotel",
-							"value": "1"
+							"value": "00000000006"
 						},
 						{
 							"key": "fromDate",
@@ -268,16 +275,16 @@
 							"value": "2019-10-28"
 						},
 						{
+							"key": "numberGuests",
+							"value": "2"
+						},
+						{
 							"key": "minPrice",
-							"value": "200000"
+							"value": ""
 						},
 						{
 							"key": "maxPrice",
-							"value": "500000"
-						},
-						{
-							"key": "numberGuests",
-							"value": "3"
+							"value": ""
 						}
 					]
 				}
@@ -569,6 +576,152 @@
 							"key": "id_users",
 							"value": "00000000001"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hotel Add",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_city",
+							"value": "00000000002",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Hotel Royal Kuningan",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/Jumaidil Fadillah/Pictures/hotel-royal-kuningan.png"
+						},
+						{
+							"key": "address",
+							"value": "Jalan Kuningan Persada Kav. 2, Jakarta Selatan",
+							"type": "text"
+						},
+						{
+							"key": "star",
+							"value": "4",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/hotel/add",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"hotel",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hotel Room Add",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_hotel",
+							"value": "00000000006",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Grand Deluxe Room Only",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "1000000",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/Jumaidil Fadillah/Pictures/Grand-Deluxe-Room-Only.png"
+						},
+						{
+							"key": "from_date",
+							"value": "2019-10-27",
+							"type": "text"
+						},
+						{
+							"key": "to_date",
+							"value": "2019-10-28",
+							"type": "text"
+						},
+						{
+							"key": "stock",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "maximum_guests",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/hotel/room/add",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"hotel",
+						"room",
+						"add"
 					]
 				}
 			},

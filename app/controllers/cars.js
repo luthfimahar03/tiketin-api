@@ -185,48 +185,6 @@ module.exports = {
 					message: err
 				})
 			})
-	},
-	// proofPaymentCars: (req, res) => {
-	// 	const { id } = req.body
-	// 	const booked_status = 'Waiting Payment Confirmation'
-	// 	let randomstring = require("randomstring");
-	// 	let payment_proof = req.files.payment_proof;
-
-	// 	var payment_proof_code = randomstring.generate({
-	// 		length: 6,
-	// 		charset: 'alphabetic'
-	// 	});
-	// 	let image = `${payment_proof_code}_${payment_proof.name}`
-
-	// 	payment_proof.mv('uploads/' + image, function (err) {
-	// 		if (err) res.send(err);
-	// 		console.log("success")
-
-	// 	})
-
-	// 	payment_proof = image
-	// 	const updated_at = new Date()
-	// 	let data = { payment_proof, booked_status, updated_at }
-
-	// 	hotelModel
-	// 		.proofPaymentCars(data, id)
-	// 		.then(result => {
-	// 			status = 200
-	// 			data = { id, ...data }
-	// 			res.status(status).json({
-	// 				status,
-	// 				message: 'Success upload payment of proof for the rental car.',
-	// 				data
-	// 			})
-	// 		})
-	// 		.catch(err => {
-	// 			console.log(err)
-	// 			status = 500
-	// 			res.status(status).json({
-	// 				status,
-	// 				message: err
-	// 			})
-	// 		})
-	// },
+	}
 
 }
